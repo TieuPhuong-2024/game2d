@@ -6,6 +6,8 @@
 #include "Logger.h"
 #include "D3DRenderer.h"
 #include "InputManager.h"
+#include "Player.h"
+#include "CollisionSystem.h"
 
 class GameEngine {
 public:
@@ -33,6 +35,10 @@ private:
     // Input system
     InputManager* m_inputManager;
     
+    // Game systems
+    CollisionSystem* m_collisionSystem;
+    Player* m_player;
+    
     // Timing for 60 FPS
     std::chrono::high_resolution_clock::time_point m_lastFrameTime;
     const double m_targetFrameTime = 1.0 / 60.0; // 60 FPS = 16.67ms per frame
@@ -41,6 +47,7 @@ private:
     bool CreateWindows();
     bool InitializeRenderer();
     bool InitializeInput();
+    bool InitializeGameSystems();
     void Update(float deltaTime);
     void Render();
     void HandleDeviceLost();

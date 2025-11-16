@@ -39,10 +39,15 @@ public:
     // Basic rendering
     void DrawSprite(Texture2D* texture, const Vector2& position, const Rect& sourceRect, const Color& tint = Color());
     void DrawSprite(Texture2D* texture, const Vector2& position, const Color& tint = Color());
+    void DrawSprite(Texture2D* texture, const Vector2& position, const Rect& sourceRect, 
+                    bool flipHorizontal, bool flipVertical = false, const Color& tint = Color());
     
     // Camera support
     void SetCamera(Camera2D* camera);
     Camera2D* GetCamera() const { return m_camera; }
+    
+    // Sprite batch access
+    SpriteBatch* GetSpriteBatch() const { return m_spriteBatch; }
     
     // Viewport information
     int GetViewportWidth() const { return m_viewportWidth; }

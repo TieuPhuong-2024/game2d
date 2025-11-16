@@ -24,6 +24,8 @@ public:
     void Draw(Texture2D* texture, const Vector2& position, const Rect& sourceRect, const Color& tint = Color());
     void Draw(Texture2D* texture, const Vector2& position, const Rect& sourceRect,
               const Vector2& scale, float rotation, const Vector2& origin, const Color& tint = Color());
+    void Draw(Texture2D* texture, const Vector2& position, const Rect& sourceRect,
+              bool flipHorizontal, bool flipVertical = false, const Color& tint = Color());
     
     // State
     bool IsInBatch() const { return m_inBatch; }

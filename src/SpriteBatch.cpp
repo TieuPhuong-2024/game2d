@@ -207,3 +207,20 @@ RECT SpriteBatch::RectangleToRECT(const Rect& rect) {
     r.bottom = rect.y + rect.height;
     return r;
 }
+void SpriteBatch::Draw(Texture2D* texture, const Vector2& position, const Rect& sourceRect,
+                      bool flipHorizontal, bool flipVertical, const Color& tint) {
+    // Use the scale-based draw method with negative scale for flipping
+    Vector2 scale(flipHorizontal ? -1.0f : 1.0f, flipVertical ? -1.0f : 1.0f);
+    
+    // Calculate origin for flipping (center of sprite for proper flip)
+    Vector2 origin(0.0f, 0.0f);
+    if (flipHorizontal) {
+        origin.x = static_cast<float>(sourceRect.width);
+    }
+    if (flipVertical) {
+        origin.y = static_cast<float>(sourceRect.height);
+    }
+    
+    // Draw with scale and origin
+    Draw(texture, position, sourceRect, scale, 0.0f, origin, tint);
+}

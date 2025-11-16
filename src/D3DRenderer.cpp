@@ -286,6 +286,33 @@ void D3DRenderer::DrawSprite(Texture2D* texture, const Vector2& position, const 
     }
 }
 
+void D3DRenderer::DrawSprite(Texture2D* texture, const Vector2& position, const Rect& sourceRect,
+                             bool flipHorizontal, bool flipVertical, const Color& tint) {
+    if (!m_spriteBatch) {
+        LOG_ERROR("SpriteBatch not initialized");
+        return;
+    }
+    
+    if (!texture || !texture->IsValid()) {
+        LOG_ERROR("Invalid texture passed to DrawSprite");
+        return;
+    }
+    
+    // Use sprite batch to draw with camera transform and flipping
+    if (!m_spriteBatch->IsInBatch()) {
+        if (m_camera) {
+            D3DXMATRIX cameraTransform = m_camera->GetTransformMatrix();
+            m_spriteBatch->Begin(&cameraTransform);
+        } else {
+            m_spriteBatch->Begin();
+        }
+        m_spriteBatch->Draw(texture, position, sourceRect, flipHorizontal, flipVertical, tint);
+        m_spriteBatch->End();
+    } else {
+        m_spriteBatch->Draw(texture, position, sourceRect, flipHorizontal, flipVertical, tint);
+    }
+}
+
 void D3DRenderer::SetCamera(Camera2D* camera) {
     m_camera = camera;
     if (camera) {

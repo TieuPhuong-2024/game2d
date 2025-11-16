@@ -8,7 +8,9 @@ GameEngine::GameEngine()
     , m_windowHeight(600)
     , m_isRunning(false)
     , m_renderer(nullptr)
-    , m_inputManager(nullptr) {
+    , m_inputManager(nullptr)
+    , m_collisionSystem(nullptr)
+    , m_player(nullptr) {
 }
 
 GameEngine::~GameEngine() {
@@ -37,6 +39,12 @@ bool GameEngine::Initialize(HINSTANCE hInstance, int windowWidth, int windowHeig
     // Initialize input system
     if (!InitializeInput()) {
         LOG_ERROR("Failed to initialize input system");
+        return false;
+    }
+    
+    // Initialize game systems
+    if (!InitializeGameSystems()) {
+        LOG_ERROR("Failed to initialize game systems");
         return false;
     }
     
@@ -127,6 +135,27 @@ bool GameEngine::InitializeInput() {
     return true;
 }
 
+bool GameEngine::InitializeGameSystems() {
+    LOG_INFO("Initializing game systems...");
+    
+    // Create collision system
+    m_collisionSystem = new CollisionSystem();
+    
+    // Create player
+    m_player = new Player();
+    m_player->SetInputManager(m_inputManager);
+    
+    // Initialize player at center of screen
+    Vector2 playerStartPos(m_windowWidth / 2.0f, m_windowHeight / 2.0f);
+    m_player->Initialize(playerStartPos);
+    
+    // For now, set player on ground for testing
+    m_player->SetOnGround(true);
+    
+    LOG_INFO("Game systems initialized successfully");
+    return true;
+}
+
 void GameEngine::Run() {
     LOG_INFO("Starting main game loop...");
     m_isRunning = true;
@@ -183,51 +212,34 @@ void GameEngine::Update(float deltaTime) {
         if (m_inputManager->IsActionPressed(InputAction::PAUSE)) {
             m_isRunning = false;
         }
-        
-        // Test input actions for demonstration
-        static float testTimer = 0.0f;
-        testTimer += deltaTime;
-        
-        if (testTimer >= 2.0f) { // Test every 2 seconds
-            testTimer = 0.0f;
-            
-            // Log current input states for testing
-            if (m_inputManager->IsActionDown(InputAction::MOVE_LEFT)) {
-                LOG_INFO("Move Left is being held");
-            }
-            if (m_inputManager->IsActionDown(InputAction::MOVE_RIGHT)) {
-                LOG_INFO("Move Right is being held");
-            }
-            if (m_inputManager->IsActionPressed(InputAction::JUMP)) {
-                LOG_INFO("Jump was pressed");
-            }
-            if (m_inputManager->IsActionPressed(InputAction::SHOOT)) {
-                LOG_INFO("Shoot was pressed");
-            }
-            if (m_inputManager->IsActionPressed(InputAction::DASH)) {
-                LOG_INFO("Dash was pressed");
-            }
-        }
     }
     
-    // This will be expanded in future tasks
-    // For now, just basic timing validation and input testing
+    // Update player
+    if (m_player) {
+        m_player->Update(deltaTime);
+    }
+    
+    // Update collision system
+    if (m_collisionSystem) {
+        m_collisionSystem->Update();
+    }
+    
+    // FPS logging
     static int frameCount = 0;
     static float timeAccumulator = 0.0f;
     
     frameCount++;
     timeAccumulator += deltaTime;
     
-    // Log FPS every second
+    // Log FPS and player state every second
     if (timeAccumulator >= 1.0f) {
         LOG_INFO("FPS: " + std::to_string(frameCount) + " (Target: 60)");
         
-        // Log input status for testing
-        if (m_inputManager) {
-            int gamepadCount = m_inputManager->GetConnectedGamepadCount();
-            if (gamepadCount > 0) {
-                LOG_INFO("Connected gamepads: " + std::to_string(gamepadCount));
-            }
+        if (m_player) {
+            Vector2 pos = m_player->GetPosition();
+            Vector2 vel = m_player->GetPhysicsBody().GetVelocity();
+            LOG_INFO("Player - Pos: (" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + 
+                     ") Vel: (" + std::to_string(vel.x) + ", " + std::to_string(vel.y) + ")");
         }
         
         frameCount = 0;
@@ -270,6 +282,17 @@ void GameEngine::Shutdown() {
     LOG_INFO("Shutting down GameEngine...");
     
     m_isRunning = false;
+    
+    // Cleanup game systems
+    if (m_player) {
+        delete m_player;
+        m_player = nullptr;
+    }
+    
+    if (m_collisionSystem) {
+        delete m_collisionSystem;
+        m_collisionSystem = nullptr;
+    }
     
     // Save input configuration before shutdown
     if (m_inputManager) {
