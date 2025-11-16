@@ -65,3 +65,9 @@ ipch/
 
 # Log files
 *.log
+
+# vscode
+.vscode
+
+# Kiro
+.kiro

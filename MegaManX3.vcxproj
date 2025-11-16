@@ -93,6 +93,10 @@
     <ClCompile Include="src\Camera2D.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\InputConfig.cpp" />
+    <ClCompile Include="src\PhysicsBody.cpp" />
+    <ClCompile Include="src\CollisionBox.cpp" />
+    <ClCompile Include="src\CollisionSystem.cpp" />
+    <ClCompile Include="src\PlatformCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameEngine.h" />
@@ -104,6 +108,10 @@
     <ClInclude Include="src\Camera2D.h" />
     <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\InputConfig.h" />
+    <ClInclude Include="src\PhysicsBody.h" />
+    <ClInclude Include="src\CollisionBox.h" />
+    <ClInclude Include="src\CollisionSystem.h" />
+    <ClInclude Include="src\PlatformCollision.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
