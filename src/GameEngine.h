@@ -63,4 +63,5 @@ private:
     // Utility methods
     void CalculateFrameStats();
     bool IsDeviceLost();
+    void CheckPlayerCollisions();
 };

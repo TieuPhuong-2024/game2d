@@ -233,6 +233,9 @@ void GameEngine::Update(float deltaTime) {
     // Update player
     if (m_player) {
         m_player->Update(deltaTime);
+        
+        // Simple collision detection with platforms
+        CheckPlayerCollisions();
     }
     
     // Update collision system
@@ -394,4 +397,80 @@ LRESULT CALLBACK GameEngine::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPA
         default:
             return DefWindowProc(hwnd, uMsg, wParam, lParam);
     }
+}
+void GameEngine::CheckPlayerCollisions() {
+    if (!m_player) return;
+    
+    Vector2 playerPos = m_player->GetPosition();
+    CollisionBox playerBox = m_player->GetCollisionBox();
+    PhysicsBody& playerPhysics = m_player->GetPhysicsBody();
+    
+    // Get player bounds
+    float playerLeft = playerPos.x + playerBox.offset.x;
+    float playerRight = playerLeft + playerBox.width;
+    float playerTop = playerPos.y + playerBox.offset.y;
+    float playerBottom = playerTop + playerBox.height;
+    
+    bool onGround = false;
+    bool onWall = false;
+    bool isRightWall = false;
+    
+    // Check collision with each platform
+    for (const auto& platform : m_testPlatforms) {
+        float platLeft = static_cast<float>(platform.bounds.x);
+        float platRight = platLeft + static_cast<float>(platform.bounds.width);
+        float platTop = static_cast<float>(platform.bounds.y);
+        float platBottom = platTop + static_cast<float>(platform.bounds.height);
+        
+        // Check if player overlaps with platform
+        bool overlapsX = playerRight > platLeft && playerLeft < platRight;
+        bool overlapsY = playerBottom > platTop && playerTop < platBottom;
+        
+        if (overlapsX && overlapsY) {
+            // Calculate overlap amounts
+            float overlapLeft = playerRight - platLeft;
+            float overlapRight = platRight - playerLeft;
+            float overlapTop = playerBottom - platTop;
+            float overlapBottom = platBottom - playerTop;
+            
+            // Find minimum overlap
+            float minOverlapX = (overlapLeft < overlapRight) ? overlapLeft : overlapRight;
+            float minOverlapY = (overlapTop < overlapBottom) ? overlapTop : overlapBottom;
+            
+            // Resolve collision on the axis with smallest overlap
+            if (minOverlapY < minOverlapX) {
+                // Vertical collision
+                if (overlapTop < overlapBottom) {
+                    // Colliding from top (player is above platform)
+                    playerPos.y = platTop - playerBox.height - playerBox.offset.y;
+                    playerPhysics.velocity.y = 0.0f;
+                    onGround = true;
+                } else {
+                    // Colliding from bottom (player hit ceiling)
+                    playerPos.y = platBottom - playerBox.offset.y;
+                    playerPhysics.velocity.y = 0.0f;
+                }
+            } else {
+                // Horizontal collision (wall)
+                if (overlapLeft < overlapRight) {
+                    // Colliding from left (player moving right into wall)
+                    playerPos.x = platLeft - playerBox.width - playerBox.offset.x;
+                    playerPhysics.velocity.x = 0.0f;
+                    onWall = true;
+                    isRightWall = true;
+                } else {
+                    // Colliding from right (player moving left into wall)
+                    playerPos.x = platRight - playerBox.offset.x;
+                    playerPhysics.velocity.x = 0.0f;
+                    onWall = true;
+                    isRightWall = false;
+                }
+            }
+        }
+    }
+    
+    // Update player state
+    m_player->SetPosition(playerPos);
+    m_player->SetOnGround(onGround);
+    m_player->SetOnWall(onWall, isRightWall);
 }
