@@ -1,4 +1,5 @@
 #include "SpriteBatch.h"
+#include "D3DRenderer.h"
 
 SpriteBatch::SpriteBatch()
     : m_device(nullptr)
@@ -203,8 +204,8 @@ RECT SpriteBatch::RectangleToRECT(const Rect& rect) {
     RECT r;
     r.left = rect.x;
     r.top = rect.y;
-    r.right = rect.x + rect.width;
-    r.bottom = rect.y + rect.height;
+    r.right = rect.x + rect.w;
+    r.bottom = rect.y + rect.h;
     return r;
 }
 void SpriteBatch::Draw(Texture2D* texture, const Vector2& position, const Rect& sourceRect,
@@ -215,10 +216,10 @@ void SpriteBatch::Draw(Texture2D* texture, const Vector2& position, const Rect& 
     // Calculate origin for flipping (center of sprite for proper flip)
     Vector2 origin(0.0f, 0.0f);
     if (flipHorizontal) {
-        origin.x = static_cast<float>(sourceRect.width);
+        origin.x = static_cast<float>(sourceRect.w);
     }
     if (flipVertical) {
-        origin.y = static_cast<float>(sourceRect.height);
+        origin.y = static_cast<float>(sourceRect.h);
     }
     
     // Draw with scale and origin

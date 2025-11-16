@@ -11,13 +11,6 @@ class Camera2D;
 class SpriteBatch;
 class DebugDraw;
 
-struct Color {
-    DWORD value;
-    Color() : value(0xFFFFFFFF) {}
-    Color(DWORD argb) : value(argb) {}
-    Color(BYTE r, BYTE g, BYTE b, BYTE a = 255) : value(D3DCOLOR_ARGB(a, r, g, b)) {}
-};
-
 class D3DRenderer {
 public:
     D3DRenderer();

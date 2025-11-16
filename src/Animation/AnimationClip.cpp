@@ -1,5 +1,5 @@
 #include "AnimationClip.h"
-#include "Logger.h"
+#include "../Utils/Logger.h"
 
 AnimationClip::AnimationClip()
     : m_name("")

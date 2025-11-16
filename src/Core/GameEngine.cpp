@@ -418,9 +418,9 @@ void GameEngine::CheckPlayerCollisions() {
     // Check collision with each platform
     for (const auto& platform : m_testPlatforms) {
         float platLeft = static_cast<float>(platform.bounds.x);
-        float platRight = platLeft + static_cast<float>(platform.bounds.width);
+        float platRight = platLeft + static_cast<float>(platform.bounds.w);
         float platTop = static_cast<float>(platform.bounds.y);
-        float platBottom = platTop + static_cast<float>(platform.bounds.height);
+        float platBottom = platTop + static_cast<float>(platform.bounds.h);
         
         // Check if player overlaps with platform
         bool overlapsX = playerRight > platLeft && playerLeft < platRight;

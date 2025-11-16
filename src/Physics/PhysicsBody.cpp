@@ -1,5 +1,4 @@
 #include "PhysicsBody.h"
-#include "Logger.h"
 
 PhysicsBody::PhysicsBody()
     : velocity(0.0f, 0.0f)

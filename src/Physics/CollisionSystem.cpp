@@ -1,5 +1,4 @@
 #include "CollisionSystem.h"
-#include "Logger.h"
 #include <algorithm>
 #include <cmath>
 

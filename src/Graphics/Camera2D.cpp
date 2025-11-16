@@ -1,6 +1,4 @@
 #include "Camera2D.h"
-#include "Logger.h"
-#include "MathTypes.h"
 #include <algorithm>
 #include <cmath>
 
@@ -117,9 +115,9 @@ void Camera2D::ApplyBounds() {
 
     // Calculate the effective bounds for camera position
     float minX = static_cast<float>(m_bounds.x) + halfViewportWidth;
-    float maxX = static_cast<float>(m_bounds.x + m_bounds.width) - halfViewportWidth;
+    float maxX = static_cast<float>(m_bounds.x + m_bounds.w) - halfViewportWidth;
     float minY = static_cast<float>(m_bounds.y) + halfViewportHeight;
-    float maxY = static_cast<float>(m_bounds.y + m_bounds.height) - halfViewportHeight;
+    float maxY = static_cast<float>(m_bounds.y + m_bounds.h) - halfViewportHeight;
 
     // Only apply bounds if the level is larger than the viewport
     if (maxX > minX) {
@@ -176,8 +174,8 @@ Rect Camera2D::GetVisibleArea() const {
     Rect visibleArea;
     visibleArea.x = static_cast<int>(topLeft.x);
     visibleArea.y = static_cast<int>(topLeft.y);
-    visibleArea.width = static_cast<int>(bottomRight.x - topLeft.x);
-    visibleArea.height = static_cast<int>(bottomRight.y - topLeft.y);
+    visibleArea.w = static_cast<int>(bottomRight.x - topLeft.x);
+    visibleArea.h = static_cast<int>(bottomRight.y - topLeft.y);
 
     return visibleArea;
 }
@@ -185,19 +183,19 @@ Rect Camera2D::GetVisibleArea() const {
 bool Camera2D::IsPointVisible(const Vector2& point) const {
     Rect visibleArea = GetVisibleArea();
     return (point.x >= visibleArea.x &&
-            point.x <= visibleArea.x + visibleArea.width &&
+            point.x <= visibleArea.x + visibleArea.w &&
             point.y >= visibleArea.y &&
-            point.y <= visibleArea.y + visibleArea.height);
+            point.y <= visibleArea.y + visibleArea.h);
 }
 
 bool Camera2D::IsRectVisible(const Rect& rect) const {
     Rect visibleArea = GetVisibleArea();
 
     // Check if rectangles intersect
-    return !(rect.x + rect.width < visibleArea.x ||
-             rect.x > visibleArea.x + visibleArea.width ||
-             rect.y + rect.height < visibleArea.y ||
-             rect.y > visibleArea.y + visibleArea.height);
+    return !(rect.x + rect.w < visibleArea.x ||
+             rect.x > visibleArea.x + visibleArea.w ||
+             rect.y + rect.h < visibleArea.y ||
+             rect.y > visibleArea.y + visibleArea.h);
 }
 
 Vector2 Camera2D::LerpVector2(const Vector2& a, const Vector2& b, float t) {

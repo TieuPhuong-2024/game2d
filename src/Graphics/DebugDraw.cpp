@@ -26,7 +26,7 @@ void DebugDraw::Shutdown() {
 
 void DebugDraw::DrawRect(const Rect& rect, D3DCOLOR color) {
     DrawRect(static_cast<float>(rect.x), static_cast<float>(rect.y), 
-             static_cast<float>(rect.width), static_cast<float>(rect.height), color);
+             static_cast<float>(rect.w), static_cast<float>(rect.h), color);
 }
 
 void DebugDraw::DrawRect(float x, float y, float width, float height, D3DCOLOR color) {

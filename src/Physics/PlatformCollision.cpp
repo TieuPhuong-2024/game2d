@@ -1,5 +1,4 @@
 #include "PlatformCollision.h"
-#include "Logger.h"
 #include <cmath>
 
 // Platform implementation
