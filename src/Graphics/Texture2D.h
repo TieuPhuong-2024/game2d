@@ -3,7 +3,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <string>
-#include "Logger.h"
+#include "../Utils/Logger.h"
 
 class Texture2D {
 public:

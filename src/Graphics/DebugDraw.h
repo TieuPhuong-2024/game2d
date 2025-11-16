@@ -1,7 +1,7 @@
 #pragma once
 #include <d3d9.h>
 #include <d3dx9.h>
-#include "MathTypes.h"
+#include "../Utils/MathTypes.h"
 
 // Simple debug drawing utility for colored rectangles
 class DebugDraw {

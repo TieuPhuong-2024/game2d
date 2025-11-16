@@ -1,5 +1,5 @@
 #pragma once
-#include "MathTypes.h"
+#include "../Utils/MathTypes.h"
 
 // Axis-Aligned Bounding Box (AABB) for collision detection
 // Represents a rectangular collision boundary for game entities

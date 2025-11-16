@@ -2,9 +2,9 @@
 #include <string>
 #include <map>
 #include <memory>
-#include "Texture2D.h"
+#include "../Graphics/Texture2D.h"
 #include "AnimationClip.h"
-#include "MathTypes.h"
+#include "../Utils/MathTypes.h"
 
 // Manages a sprite sheet texture and provides frame extraction
 class SpriteSheet {

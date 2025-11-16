@@ -1,5 +1,5 @@
 #include "SpriteSheet.h"
-#include "Logger.h"
+#include "../Utils/Logger.h"
 
 SpriteSheet::SpriteSheet()
     : m_texture(nullptr)

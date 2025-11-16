@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animation">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{A8E8C5F1-2B3C-4D5E-9F7A-1C3D5E7F9A0B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{B9F9D6E2-3C4D-5E6F-0A8B-2D4E6F8A1C0D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{C0A0E7F3-4D5E-6F7A-1B9C-3E5F7A9B1D0E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{D1B1F8A4-5E6F-7A8B-2C0D-4F6A8B0C1E0F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Core\main.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GameEngine.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\D3DRenderer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Texture2D.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\SpriteBatch.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Camera2D.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DebugDraw.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Animation\AnimationClip.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Animation\SpriteSheet.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Animation\Animator.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\InputManager.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\InputConfig.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\PhysicsBody.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\CollisionBox.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\CollisionSystem.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\PlatformCollision.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entities\Player.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\Logger.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Core\GameEngine.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\D3DRenderer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Texture2D.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\SpriteBatch.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Camera2D.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\DebugDraw.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Animation\AnimationClip.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Animation\SpriteSheet.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Animation\AnimationState.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Animation\Animator.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\InputManager.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\InputConfig.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\PhysicsBody.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\CollisionBox.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\CollisionSystem.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\PlatformCollision.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entities\Player.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\Logger.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\MathTypes.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

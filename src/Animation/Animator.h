@@ -5,7 +5,7 @@
 #include "AnimationClip.h"
 #include "AnimationState.h"
 #include "SpriteSheet.h"
-#include "MathTypes.h"
+#include "../Utils/MathTypes.h"
 
 // Forward declaration
 class Texture2D;

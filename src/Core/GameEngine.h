@@ -4,11 +4,11 @@
 #include <d3dx9.h>
 #include <chrono>
 #include <vector>
-#include "Logger.h"
-#include "D3DRenderer.h"
-#include "InputManager.h"
-#include "Player.h"
-#include "CollisionSystem.h"
+#include "../Utils/Logger.h"
+#include "../Graphics/D3DRenderer.h"
+#include "../Input/InputManager.h"
+#include "../Entities/Player.h"
+#include "../Physics/CollisionSystem.h"
 
 class GameEngine {
 public:

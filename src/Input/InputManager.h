@@ -3,7 +3,7 @@
 #include <dinput.h>
 #include <array>
 #include <memory>
-#include "Logger.h"
+#include "../Utils/Logger.h"
 #include "InputConfig.h"
 #include <vector>
 

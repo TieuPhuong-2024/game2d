@@ -1,9 +1,9 @@
 #pragma once
-#include "MathTypes.h"
-#include "PhysicsBody.h"
-#include "CollisionBox.h"
-#include "Animator.h"
-#include "InputManager.h"
+#include "../Utils/MathTypes.h"
+#include "../Physics/PhysicsBody.h"
+#include "../Physics/CollisionBox.h"
+#include "../Animation/Animator.h"
+#include "../Input/InputManager.h"
 
 // Player character (X) with movement, combat, and special abilities
 class Player {

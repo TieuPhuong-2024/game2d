@@ -8,8 +8,7 @@
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
-#include "MathTypes.h"
-#include "D3DRenderer.h"
+#include "../Utils/MathTypes.h"
 
 class Camera2D {
 public:

@@ -1,5 +1,5 @@
 #include "Animator.h"
-#include "Logger.h"
+#include "../Utils/Logger.h"
 
 Animator::Animator()
     : m_spriteSheet(nullptr)

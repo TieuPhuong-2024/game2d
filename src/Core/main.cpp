@@ -1,6 +1,6 @@
 #include <windows.h>
 #include "GameEngine.h"
-#include "Logger.h"
+#include "../Utils/Logger.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
     // Initialize logger first

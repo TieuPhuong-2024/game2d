@@ -1,5 +1,5 @@
 #pragma once
-#include "MathTypes.h"
+#include "../Utils/MathTypes.h"
 
 // PhysicsBody component for game entities
 // Handles velocity, acceleration, gravity, and basic physics calculations

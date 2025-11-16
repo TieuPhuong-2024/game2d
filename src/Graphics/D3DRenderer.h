@@ -2,8 +2,8 @@
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
-#include "Logger.h"
-#include "MathTypes.h"
+#include "../Utils/Logger.h"
+#include "../Utils/MathTypes.h"
 
 // Forward declarations
 class Texture2D;

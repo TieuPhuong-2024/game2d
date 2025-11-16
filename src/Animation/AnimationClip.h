@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "MathTypes.h"
+#include "../Utils/MathTypes.h"
 
 // Represents a single frame in an animation
 struct AnimationFrame {

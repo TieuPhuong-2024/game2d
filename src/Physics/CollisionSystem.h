@@ -1,5 +1,5 @@
 #pragma once
-#include "MathTypes.h"
+#include "../Utils/MathTypes.h"
 #include "CollisionBox.h"
 #include <vector>
 #include <functional>

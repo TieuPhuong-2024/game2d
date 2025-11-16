@@ -2,7 +2,7 @@
 #include <string>
 #include <map>
 #include <fstream>
-#include "Logger.h"
+#include "../Utils/Logger.h"
 
 // Forward declaration
 enum class InputAction;

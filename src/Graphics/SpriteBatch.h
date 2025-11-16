@@ -3,7 +3,6 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "Texture2D.h"
-#include "D3DRenderer.h"
 
 class SpriteBatch {
 public:
