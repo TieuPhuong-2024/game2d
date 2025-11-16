@@ -97,6 +97,9 @@
     <ClCompile Include="src\CollisionBox.cpp" />
     <ClCompile Include="src\CollisionSystem.cpp" />
     <ClCompile Include="src\PlatformCollision.cpp" />
+    <ClCompile Include="src\AnimationClip.cpp" />
+    <ClCompile Include="src\SpriteSheet.cpp" />
+    <ClCompile Include="src\Animator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameEngine.h" />
@@ -112,6 +115,10 @@
     <ClInclude Include="src\CollisionBox.h" />
     <ClInclude Include="src\CollisionSystem.h" />
     <ClInclude Include="src\PlatformCollision.h" />
+    <ClInclude Include="src\AnimationClip.h" />
+    <ClInclude Include="src\SpriteSheet.h" />
+    <ClInclude Include="src\AnimationState.h" />
+    <ClInclude Include="src\Animator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
