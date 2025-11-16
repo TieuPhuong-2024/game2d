@@ -9,6 +9,7 @@
 class Texture2D;
 class Camera2D;
 class SpriteBatch;
+class DebugDraw;
 
 struct Color {
     DWORD value;
@@ -49,6 +50,10 @@ public:
     // Sprite batch access
     SpriteBatch* GetSpriteBatch() const { return m_spriteBatch; }
     
+    // Debug drawing
+    void DrawDebugRect(const Rect& rect, D3DCOLOR color);
+    void DrawDebugRect(float x, float y, float width, float height, D3DCOLOR color);
+    
     // Viewport information
     int GetViewportWidth() const { return m_viewportWidth; }
     int GetViewportHeight() const { return m_viewportHeight; }
@@ -69,6 +74,9 @@ private:
     
     // Sprite rendering
     SpriteBatch* m_spriteBatch;
+    
+    // Debug drawing
+    DebugDraw* m_debugDraw;
     
     // Internal methods
     bool CreateDevice();

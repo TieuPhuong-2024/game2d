@@ -3,6 +3,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <chrono>
+#include <vector>
 #include "Logger.h"
 #include "D3DRenderer.h"
 #include "InputManager.h"
@@ -38,6 +39,13 @@ private:
     // Game systems
     CollisionSystem* m_collisionSystem;
     Player* m_player;
+    
+    // Test platforms for collision
+    struct Platform {
+        Rect bounds;
+        D3DCOLOR color;
+    };
+    std::vector<Platform> m_testPlatforms;
     
     // Timing for 60 FPS
     std::chrono::high_resolution_clock::time_point m_lastFrameTime;

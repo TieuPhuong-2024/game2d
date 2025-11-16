@@ -101,6 +101,7 @@
     <ClCompile Include="src\SpriteSheet.cpp" />
     <ClCompile Include="src\Animator.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\DebugDraw.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameEngine.h" />
@@ -121,6 +122,7 @@
     <ClInclude Include="src\AnimationState.h" />
     <ClInclude Include="src\Animator.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\DebugDraw.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

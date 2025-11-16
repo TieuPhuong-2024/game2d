@@ -145,12 +145,28 @@ bool GameEngine::InitializeGameSystems() {
     m_player = new Player();
     m_player->SetInputManager(m_inputManager);
     
-    // Initialize player at center of screen
-    Vector2 playerStartPos(m_windowWidth / 2.0f, m_windowHeight / 2.0f);
+    // Initialize player above the ground platform
+    Vector2 playerStartPos(100.0f, 100.0f);
     m_player->Initialize(playerStartPos);
     
-    // For now, set player on ground for testing
-    m_player->SetOnGround(true);
+    // Create test platforms
+    // Ground platform
+    Platform ground;
+    ground.bounds = Rect(0, 500, 800, 100);  // Bottom of screen
+    ground.color = D3DCOLOR_ARGB(255, 100, 200, 100);  // Green
+    m_testPlatforms.push_back(ground);
+    
+    // Wall platform
+    Platform wall;
+    wall.bounds = Rect(600, 300, 50, 200);  // Right side wall
+    wall.color = D3DCOLOR_ARGB(255, 200, 100, 100);  // Red
+    m_testPlatforms.push_back(wall);
+    
+    // Another platform in the middle
+    Platform midPlatform;
+    midPlatform.bounds = Rect(300, 350, 200, 30);
+    midPlatform.color = D3DCOLOR_ARGB(255, 150, 150, 200);  // Purple
+    m_testPlatforms.push_back(midPlatform);
     
     LOG_INFO("Game systems initialized successfully");
     return true;
@@ -251,12 +267,28 @@ void GameEngine::Render() {
     if (!m_renderer) return;
     
     // Clear the screen
-    m_renderer->Clear(Color(0, 0, 64)); // Dark blue background
+    m_renderer->Clear(Color(50, 50, 100)); // Dark blue background
     
     // Begin frame
     m_renderer->BeginFrame();
     
-    // Future rendering code will go here
+    // Draw test platforms
+    for (const auto& platform : m_testPlatforms) {
+        m_renderer->DrawDebugRect(platform.bounds, platform.color);
+    }
+    
+    // Draw player as a colored square
+    if (m_player) {
+        Vector2 playerPos = m_player->GetPosition();
+        CollisionBox playerBox = m_player->GetCollisionBox();
+        
+        // Draw player collision box
+        float x = playerPos.x + playerBox.offset.x;
+        float y = playerPos.y + playerBox.offset.y;
+        
+        D3DCOLOR playerColor = D3DCOLOR_ARGB(255, 255, 255, 0);  // Yellow
+        m_renderer->DrawDebugRect(x, y, playerBox.width, playerBox.height, playerColor);
+    }
     
     // End frame
     m_renderer->EndFrame();

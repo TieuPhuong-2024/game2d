@@ -2,6 +2,7 @@
 #include "Camera2D.h"
 #include "SpriteBatch.h"
 #include "Texture2D.h"
+#include "DebugDraw.h"
 
 D3DRenderer::D3DRenderer()
     : m_d3d(nullptr)
@@ -10,7 +11,8 @@ D3DRenderer::D3DRenderer()
     , m_viewportWidth(0)
     , m_viewportHeight(0)
     , m_camera(nullptr)
-    , m_spriteBatch(nullptr) {
+    , m_spriteBatch(nullptr)
+    , m_debugDraw(nullptr) {
     ZeroMemory(&m_presentParams, sizeof(m_presentParams));
 }
 
@@ -47,6 +49,15 @@ bool D3DRenderer::Initialize(HWND hwnd, int width, int height) {
         LOG_ERROR("Failed to initialize SpriteBatch");
         delete m_spriteBatch;
         m_spriteBatch = nullptr;
+        return false;
+    }
+    
+    // Create debug draw utility
+    m_debugDraw = new DebugDraw();
+    if (!m_debugDraw->Initialize(m_d3dDevice)) {
+        LOG_ERROR("Failed to initialize DebugDraw");
+        delete m_debugDraw;
+        m_debugDraw = nullptr;
         return false;
     }
     
@@ -109,6 +120,13 @@ void D3DRenderer::SetupRenderStates() {
 
 void D3DRenderer::Shutdown() {
     LOG_INFO("Shutting down D3DRenderer...");
+    
+    // Shutdown debug draw
+    if (m_debugDraw) {
+        m_debugDraw->Shutdown();
+        delete m_debugDraw;
+        m_debugDraw = nullptr;
+    }
     
     // Shutdown sprite batch
     if (m_spriteBatch) {
@@ -347,4 +365,13 @@ void D3DRenderer::ResetCameraTransform() {
     D3DXMatrixIdentity(&identity);
     
     // This will be handled by the SpriteBatch when it begins/ends
+}
+void D3DRenderer::DrawDebugRect(const Rect& rect, D3DCOLOR color) {
+    if (!m_debugDraw) return;
+    m_debugDraw->DrawRect(rect, color);
+}
+
+void D3DRenderer::DrawDebugRect(float x, float y, float width, float height, D3DCOLOR color) {
+    if (!m_debugDraw) return;
+    m_debugDraw->DrawRect(x, y, width, height, color);
 }
