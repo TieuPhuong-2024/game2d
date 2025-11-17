@@ -70,3 +70,7 @@ ipch/
 
 # Kiro
 .kiro
+
+# ignore md files
+*.md
+!README.md
