@@ -6,6 +6,7 @@
 #include <vector>
 #include "../Utils/Logger.h"
 #include "../Graphics/D3DRenderer.h"
+#include "../Graphics/SpriteBatch.h"
 #include "../Input/InputManager.h"
 #include "../Entities/Player.h"
 #include "../Physics/CollisionSystem.h"
@@ -32,6 +33,7 @@ private:
     
     // Rendering system
     D3DRenderer* m_renderer;
+    SpriteBatch* m_spriteBatch;
     
     // Input system
     InputManager* m_inputManager;

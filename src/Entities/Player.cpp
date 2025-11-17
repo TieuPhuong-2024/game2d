@@ -4,8 +4,9 @@
 
 Player::Player()
     : m_position(0.0f, 0.0f)
-    , m_animator(nullptr)
     , m_inputManager(nullptr)
+    , m_spriteSheet(nullptr)
+    , m_animator(nullptr)
     , m_isOnGround(false)
     , m_isOnWall(false)
     , m_isRightWall(true)
@@ -30,9 +31,19 @@ Player::Player()
 }
 
 Player::~Player() {
+    // Clean up animation system
+    if (m_animator) {
+        delete m_animator;
+        m_animator = nullptr;
+    }
+    
+    if (m_spriteSheet) {
+        delete m_spriteSheet;
+        m_spriteSheet = nullptr;
+    }
 }
 
-void Player::Initialize(const Vector2& startPosition) {
+bool Player::Initialize(LPDIRECT3DDEVICE9 device, const Vector2& startPosition) {
     m_position = startPosition;
     m_physicsBody.Reset();
     m_isOnGround = false;
@@ -41,13 +52,30 @@ void Player::Initialize(const Vector2& startPosition) {
     m_isDashing = false;
     m_isInvincible = false;
     
+    // Create sprite sheet and load from XML
+    m_spriteSheet = new SpriteSheet();
+    if (!m_spriteSheet->LoadFromXML(device, "assets/mmx_xsheet_idle/mmx_xsheet_idle.xml")) {
+        LOG_ERROR("Failed to load player sprite sheet");
+        delete m_spriteSheet;
+        m_spriteSheet = nullptr;
+        return false;
+    }
+    
+    // Automatically create idle animation from XML frames
+    m_spriteSheet->CreateAnimationFromXMLSequence("idle-", 0.1f);
+    
+    // Create animator and set sprite sheet
+    m_animator = new Animator();
+    m_animator->SetSpriteSheet(m_spriteSheet);
+    
+    // Start with idle animation
+    m_animator->Play(AnimationState::Idle);
+    
     LOG_INFO("Player initialized at position (" + 
              std::to_string(startPosition.x) + ", " + 
              std::to_string(startPosition.y) + ")");
-}
-
-void Player::SetAnimator(Animator* animator) {
-    m_animator = animator;
+    
+    return true;
 }
 
 void Player::SetInputManager(InputManager* inputManager) {
@@ -93,6 +121,11 @@ void Player::Update(float deltaTime) {
     
     // Update animation state
     UpdateAnimation();
+    
+    // Update animator
+    if (m_animator) {
+        m_animator->Update(deltaTime);
+    }
 }
 
 void Player::UpdateMovement(float deltaTime) {
@@ -323,4 +356,18 @@ void Player::UpdateFacingDirection(float horizontalInput) {
     } else if (horizontalInput < 0.0f) {
         m_facingRight = false;
     }
+}
+
+// Rect Player::GetCurrentSpriteRect() const {
+//     if (m_animator) {
+//         return m_animator->GetCurrentFrameRect();
+//     }
+//     return Rect(); // Return empty rect if no animator
+// }
+
+Texture2D* Player::GetTexture() const {
+    if (m_spriteSheet) {
+        return m_spriteSheet->GetTexture();
+    }
+    return nullptr;
 }

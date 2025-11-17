@@ -8,6 +8,7 @@ GameEngine::GameEngine()
     , m_windowHeight(600)
     , m_isRunning(false)
     , m_renderer(nullptr)
+    , m_spriteBatch(nullptr)
     , m_inputManager(nullptr)
     , m_collisionSystem(nullptr)
     , m_player(nullptr) {
@@ -145,9 +146,12 @@ bool GameEngine::InitializeGameSystems() {
     m_player = new Player();
     m_player->SetInputManager(m_inputManager);
     
-    // Initialize player above the ground platform
+    // Initialize player with sprite sheet (player manages its own animation)
     Vector2 playerStartPos(100.0f, 100.0f);
-    m_player->Initialize(playerStartPos);
+    if (!m_player->Initialize(m_renderer->GetDevice(), playerStartPos)) {
+        LOG_ERROR("Failed to initialize player");
+        return false;
+    }
     
     // Create test platforms
     // Ground platform
@@ -267,7 +271,7 @@ void GameEngine::Update(float deltaTime) {
 }
 
 void GameEngine::Render() {
-    if (!m_renderer) return;
+    if (!m_renderer || !m_spriteBatch) return;
     
     // Clear the screen
     m_renderer->Clear(Color(50, 50, 100)); // Dark blue background
@@ -280,18 +284,39 @@ void GameEngine::Render() {
         m_renderer->DrawDebugRect(platform.bounds, platform.color);
     }
     
-    // Draw player as a colored square
+    // Begin sprite batch for 2D rendering
+    m_spriteBatch->Begin();
+    
+    // Draw player sprite
     if (m_player) {
-        Vector2 playerPos = m_player->GetPosition();
-        CollisionBox playerBox = m_player->GetCollisionBox();
+        Texture2D* playerTexture = m_player->GetTexture();
+        Vector2 playerPos;
+        if (playerTexture) {
+            playerPos = m_player->GetPosition();
+            Rect spriteRect = m_player->GetCurrentSpriteRect();
+            
+            // Draw the sprite (scale 2x for visibility)
+            m_spriteBatch->Draw(
+                playerTexture,
+                playerPos,
+                spriteRect,
+                Vector2(2.0f, 2.0f),  // Scale
+                0.0f,                  // Rotation
+                Vector2(spriteRect.w / 2.0f, spriteRect.h / 2.0f),  // Origin (center)
+                Color(1.0f, 1.0f, 1.0f, 1.0f)  // White tint
+            );
+        }
         
-        // Draw player collision box
+        // Also draw collision box for debugging
+        CollisionBox playerBox = m_player->GetCollisionBox();
         float x = playerPos.x + playerBox.offset.x;
         float y = playerPos.y + playerBox.offset.y;
-        
-        D3DCOLOR playerColor = D3DCOLOR_ARGB(255, 255, 255, 0);  // Yellow
+        D3DCOLOR playerColor = D3DCOLOR_ARGB(128, 255, 255, 0);  // Semi-transparent yellow
         m_renderer->DrawDebugRect(x, y, playerBox.width, playerBox.height, playerColor);
     }
+    
+    // End sprite batch
+    m_spriteBatch->End();
     
     // End frame
     m_renderer->EndFrame();
@@ -335,6 +360,13 @@ void GameEngine::Shutdown() {
         m_inputManager->Shutdown();
         delete m_inputManager;
         m_inputManager = nullptr;
+    }
+    
+    // Shutdown sprite batch
+    if (m_spriteBatch) {
+        // m_spriteBatch->Release();
+        delete m_spriteBatch;
+        m_spriteBatch = nullptr;
     }
     
     // Shutdown renderer

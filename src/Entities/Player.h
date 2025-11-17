@@ -1,8 +1,10 @@
 #pragma once
+#include <d3d9.h>
 #include "../Utils/MathTypes.h"
 #include "../Physics/PhysicsBody.h"
 #include "../Physics/CollisionBox.h"
 #include "../Animation/Animator.h"
+#include "../Animation/SpriteSheet.h"
 #include "../Input/InputManager.h"
 
 // Player character (X) with movement, combat, and special abilities
@@ -12,13 +14,13 @@ public:
     ~Player();
     
     // Initialization
-    void Initialize(const Vector2& startPosition);
-    void SetAnimator(Animator* animator);
+    bool Initialize(LPDIRECT3DDEVICE9 device, const Vector2& startPosition);
     void SetInputManager(InputManager* inputManager);
     
     // Update and rendering
     void Update(float deltaTime);
     Rect GetCurrentSpriteRect() const;
+    Texture2D* GetTexture() const;
     
     // Position and transform
     Vector2 GetPosition() const { return m_position; }
@@ -61,8 +63,11 @@ private:
     Vector2 m_position;
     PhysicsBody m_physicsBody;
     CollisionBox m_collisionBox;
-    Animator* m_animator;
     InputManager* m_inputManager;
+    
+    // Animation system (owned by Player)
+    SpriteSheet* m_spriteSheet;
+    Animator* m_animator;
     
     // Movement state
     bool m_isOnGround;
